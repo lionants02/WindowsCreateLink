@@ -33,3 +33,9 @@ dependencies {
     link.build("G:\\Document\\Users")
 ```
 สามารถกำหนด parameter ใน build ได้ โดยที่ไม่ต้องใส่นามสกุล lnk(auto .lnk)
+
+  
+```kotlin
+    val link = CreateLink(File("C:\\User"))
+    link.build("G:\\Document\\Users",override = true)
+```
