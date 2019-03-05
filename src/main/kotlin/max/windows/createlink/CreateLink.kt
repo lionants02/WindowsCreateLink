@@ -12,14 +12,17 @@ class CreateLink(val source: File) {
                 "\$s.TargetPath='_Target_';" +
                 "\$s.Save()\""
 
-    fun build(shortcut: File = File(userDesktop + source.name)) {
+    fun build(shortcut: File = File(userDesktop + source.name), override: Boolean = false) {
+        val shortCutAbsloutePath = shortcut.absolutePath.replace(Regex("""\.lnk$"""), "")
+        val checkLink = File("$shortCutAbsloutePath.lnk")
+
         require(source.isAbsolute) { "Source wrong format." }
         require(source.isFile || source.isDirectory) { "Have not source." }
-        require(shortcut.isAbsolute) { "Shutcut wrong format. .build(File(\"C:\\test\"))" }
-        require(!(shortcut.isFile || shortcut.isDirectory)) { "Have shortcuts." }
+        require(checkLink.isAbsolute) { "Shutcut wrong format. .build(File(\"C:\\test\"))" }
+        require(!checkLink.isFile || override) { "Have shortcuts." }
 
         val command = shutcutTemplate
-            .replaceFirst("_Shortcut_", shortcut.absolutePath.replace(Regex("""\.lnk$"""), ""))
+            .replaceFirst("_Shortcut_", shortCutAbsloutePath)
             .replaceFirst("_Target_", source.absolutePath)
 
         commandExc(command)
