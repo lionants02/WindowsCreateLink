@@ -1,5 +1,6 @@
 package max.windows.createlink
 
+import org.junit.Ignore
 import org.junit.Test
 import java.io.File
 
@@ -14,5 +15,11 @@ class CreateLinkTest {
     @Test
     fun windowsStartupParth() {
         println(createLink.userWindowsStartupPath)
+    }
+
+    @Ignore("How to use.")
+    fun build() {
+        val link = CreateLink(File("G:\\Pictures\\spec server"))
+        link.build()
     }
 }

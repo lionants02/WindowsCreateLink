@@ -12,11 +12,14 @@ class CreateLink(val source: File) {
                 "\$s.TargetPath='_Target_';" +
                 "\$s.Save()\""
 
-    fun build(shutcut: File = File(userDesktop + source.name)) {
-        require(source.isAbsolute) { "Not have file or folder." }
+    fun build(shortcut: File = File(userDesktop + source.name)) {
+        require(source.isAbsolute) { "Source wrong format." }
+        require(source.isFile || source.isDirectory) { "Have not source." }
+        require(shortcut.isAbsolute) { "Shutcut wrong format. .build(File(\"C:\\test\"))" }
+        require(!(shortcut.isFile || shortcut.isDirectory)) { "Have shortcuts." }
 
         val command = shutcutTemplate
-            .replaceFirst("_Shortcut_", shutcut.absolutePath)
+            .replaceFirst("_Shortcut_", shortcut.absolutePath)
             .replaceFirst("_Target_", source.absolutePath)
 
         commandExc(command)
