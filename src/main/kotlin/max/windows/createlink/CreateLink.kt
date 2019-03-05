@@ -19,7 +19,7 @@ class CreateLink(val source: File) {
         require(!(shortcut.isFile || shortcut.isDirectory)) { "Have shortcuts." }
 
         val command = shutcutTemplate
-            .replaceFirst("_Shortcut_", shortcut.absolutePath)
+            .replaceFirst("_Shortcut_", shortcut.absolutePath.replace(Regex("""\.lnk$"""), ""))
             .replaceFirst("_Target_", source.absolutePath)
 
         commandExc(command)
